@@ -25,16 +25,16 @@ class NilaiController extends Controller
         $urlMahasiswa = 'http://localhost/sait-uts-api/mahasiswa.php';
         $urlMatakuliah = 'http://localhost/sait-uts-api/mk.php';
 
-        // Making HTTP GET requests
         $responseMahasiswa = Http::get($urlMahasiswa);
         $responseMatakuliah = Http::get($urlMatakuliah);
+        
+        if (!$responseMahasiswa->successful() || !$responseMatakuliah->successful()) {
+            return back()->withErrors('Failed to fetch data from the API.');
+        }
 
-        // Assuming the API returns data in the following format:
-        // { "status": 1, "data": [...] }
         $mahasiswa = $responseMahasiswa->json()['data'];
         $matakuliah = $responseMatakuliah->json()['data'];
 
-        // Pass the data to the view
         return view('nilai.create', [
             'mahasiswa' => $mahasiswa,
             'matakuliah' => $matakuliah
