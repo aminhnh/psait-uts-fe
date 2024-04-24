@@ -22,7 +22,23 @@ class NilaiController extends Controller
      */
     public function create()
     {
-        return view('nilai.create');
+        $urlMahasiswa = 'http://localhost/sait-uts-api/mahasiswa.php';
+        $urlMatakuliah = 'http://localhost/sait-uts-api/mk.php';
+
+        // Making HTTP GET requests
+        $responseMahasiswa = Http::get($urlMahasiswa);
+        $responseMatakuliah = Http::get($urlMatakuliah);
+
+        // Assuming the API returns data in the following format:
+        // { "status": 1, "data": [...] }
+        $mahasiswa = $responseMahasiswa->json()['data'];
+        $matakuliah = $responseMatakuliah->json()['data'];
+
+        // Pass the data to the view
+        return view('nilai.create', [
+            'mahasiswa' => $mahasiswa,
+            'matakuliah' => $matakuliah
+        ]);
     }
 
     /**

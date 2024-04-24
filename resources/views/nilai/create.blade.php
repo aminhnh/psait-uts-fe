@@ -16,12 +16,20 @@
     <form action="{{ route('nilai.store') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="nim">NIM</label>
-            <input type="text" class="form-control" id="nim" name="nim" required>
+            <label for="nim">Mahasiswa</label>
+            <select name="nim" id="nim" class="form-control">
+                @foreach ($mahasiswa as $mhs)
+                    <option value="{{ $mhs['nim'] }}">{{ '['. $mhs['nim'] .'] '.$mhs['nama']}}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
-            <label for="kode_mk">Kode MK</label>
-            <input type="text" class="form-control" id="kode_mk" name="kode_mk" required>
+            <label for="kode_mk">Matakuliah</label>
+            <select name="kode_mk" id="kode_mk" class="form-control">
+                @foreach ($matakuliah as $mk)
+                    <option value="{{ $mk['kode_mk'] }}">{{ '[' . $mk['kode_mk'] . '] ' . $mk['nama_mk'] }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="nilai">Nilai</label>
